@@ -11,18 +11,18 @@ export const appRoutes: routeInterface[] = [
     protected: true,
   },
   {
-    path: "/auth/sign",
-    method: "get",
-    action: AuthController.sign,
-  },
-  {
-    path: "/auth/verify/:token",
-    method: "get",
-    action: AuthController.verify,
+    path: "/auth/login",
+    method: "post",
+    action: AuthController.login,
   },
   {
     path: "/users/add",
     method: "post",
     action: UsersController.add,
+  },
+  {
+    path: "/recaptcha/mp3",
+    method: "post",
+    action: AuthController.login,
   },
 ];

@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export async function auth(req: Request, res: Response, next: NextFunction) {
-  const chavePrivada = "123abc";
   let authorization = req.headers["authorization"] ?? "";
 
   if (!authorization.startsWith("Bearer")) {
@@ -11,7 +10,7 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
 
   authorization = authorization.split("Bearer ")[1];
 
-  jwt.verify(authorization, chavePrivada, (err: any, auth: any) => {
+  jwt.verify(authorization, process.env.API_KEY!, (err: any, auth: any) => {
     if (err) {
       return res.status(403).end();
     }
