@@ -7,11 +7,6 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y npm
 RUN apt-get install -y python3-pip
 RUN apt-get install -y python3-dev
-
-COPY ./requirements.txt /app/requirements.txt
+RUN apt-get install -y ffmpeg
 
 WORKDIR /app
-
-RUN pip install -r requirements.txt
-
-COPY . /app
