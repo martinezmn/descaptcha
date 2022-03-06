@@ -14,9 +14,9 @@ export class RecaptchaController {
         PythonShell.run('getRecognition.py', DocumentOptions(mp3Url), async function (err, text: string) {
           if(err) { console.log(err); reject()}
           if(JSON.parse(text) === null || JSON.parse(text) === undefined){
-            res.status(500).send({response: "Not recognized."})
+            res.status(500).send({error: "Not recognized."})
           }
-          res.send({error: JSON.parse(text)}).end()
+          res.send({response: JSON.parse(text)}).end()
           resolve()
         })
       }
