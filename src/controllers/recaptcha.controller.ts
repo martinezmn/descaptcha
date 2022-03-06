@@ -1,14 +1,28 @@
 import { Request, Response } from "express";
+import { PythonShell } from 'python-shell'
+import {DocumentOptions} from '../config/py-shell.config'
 
-export class IndexController {
+export class RecaptchaController {
   public static async mp3(req: Request, res: Response) {
     const { mp3Url } = req.body;
 
     //SE VIRA
 
-    const response = "";
-    res.status(200).send({
-      frase: response,
-    });
+    await new Promise<void>((resolve, reject) => {
+      try {
+        // @ts-expect-error Error expected cause is a manually query
+        PythonShell.run('getRecognition.py', DocumentOptions(mp3Url), async function (err, text: string) {
+          if(err) { console.log(err); reject()}
+          if(JSON.parse(text) === null || JSON.parse(text) === undefined){
+            res.status(500).send({response: "Not recognized."})
+          }
+          res.send({error: JSON.parse(text)}).end()
+          resolve()
+        })
+      }
+      catch(error){
+        reject()
+      }
+    })
   }
 }
